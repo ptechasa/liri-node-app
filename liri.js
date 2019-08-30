@@ -38,7 +38,17 @@ function spotifyThisSong(userInput) {
         }
     });
 }
-
-
-
+function concertThis(userInput) {
+    axios.get("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp").then(function (response) {
+        // handle success
+        // console.log('hell', response.data);
+        console.log('Name of the venue:', response.data[0].venue.name);
+        console.log('Location:', response.data[0].venue.city);
+        console.log('Date of the Event:', response.data[0].datetime);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+}
 
