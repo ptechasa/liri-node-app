@@ -52,3 +52,22 @@ function concertThis(userInput) {
       })
 }
 
+function movieThis(userInput) {
+    axios.get("https://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy").then(function (response) {
+        // handle success
+        console.log('Title of the movie:', response.data.Title);
+        console.log('Year the movie came out:', response.data.Year);
+        console.log('IMDB Rating of the movie:', response.data.imdbRating);
+        console.log('Rotten Tomatoes Rating of the movie:', response.data.Ratings[1].Value);
+        console.log('Country:', response.data.Country);
+        console.log('Language:', response.data.Language);
+        console.log('Plot:', response.data.Plot);
+        console.log('Actors', response.data.Actors);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+}
+
+ 
