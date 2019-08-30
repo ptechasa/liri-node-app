@@ -31,7 +31,7 @@ function spotifyThisSong(userInput) {
             console.log('Error', err)
         } else {
             // console.log(data.tracks)
-            console.log('Artist(s):', data.tracks.items[0].artists[0].name); 
+            console.log('Artist(s):', data.tracks.items[0].artists[0].name);
             console.log('Song Name:', data.tracks.items[0].name);
             console.log('Preview song:', data.tracks.items[0].preview_url);
             console.log('Album:', data.tracks.items[0].album.name)
@@ -45,11 +45,11 @@ function concertThis(userInput) {
         console.log('Name of the venue:', response.data[0].venue.name);
         console.log('Location:', response.data[0].venue.city);
         console.log('Date of the Event:', response.data[0].datetime);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
+    })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
 }
 
 function movieThis(userInput) {
@@ -58,16 +58,32 @@ function movieThis(userInput) {
         console.log('Title of the movie:', response.data.Title);
         console.log('Year the movie came out:', response.data.Year);
         console.log('IMDB Rating of the movie:', response.data.imdbRating);
-        console.log('Rotten Tomatoes Rating of the movie:', response.data.Ratings[1].Value);
+        console.log('Rotten Tomatoes Rating of the movie:', response.data.Ratings[0].Value);
         console.log('Country:', response.data.Country);
         console.log('Language:', response.data.Language);
         console.log('Plot:', response.data.Plot);
         console.log('Actors', response.data.Actors);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      })
+    })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
 }
 
- 
+if (userCommand == 'spotify-this-song') {
+    spotifyThisSong(userInput)
+
+    //if user input a track, and then it will search
+} else if (userCommand == 'concert-this') {
+    concertThis(userInput);
+} else if (userCommand == 'movie-this') {
+    movieThis(userInput);
+} else if (userCommand == 'do-what-it-says') {
+    filesSystem.readFile('./random.txt', 'utf8', function (err, data) {
+
+        console.log(data)
+        var dataArr = data.split(",")
+        console.log(dataArr)
+        spotifyThisSong(dataArr[1])
+    })
+}
