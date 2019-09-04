@@ -1,8 +1,6 @@
 // Read and set environment variables
 require("dotenv").config();
 var keys = require("./keys.js");
-// console.log(keys)
-// console.log(keys.private.id)
 
 //using Spotify package to retrieve song information
 var Spotify = require('node-spotify-api');
@@ -30,13 +28,15 @@ function spotifyThisSong(userInput) {
         if (err) {
             console.log('Error', err)
         } else {
-            // console.log(data.tracks)
+            // console.log(data.tracks) 
+            console.log('***********************************************')
             console.log('\n')
             console.log('Artist(s):', data.tracks.items[0].artists[0].name);
             console.log('Song Name:', data.tracks.items[0].name);
             console.log('Preview song:', data.tracks.items[0].preview_url);
             console.log('Album:', data.tracks.items[0].album.name)
             console.log('\n')
+            console.log('***********************************************')
         }
     });
 }
@@ -44,11 +44,13 @@ function concertThis(userInput) {
     axios.get("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp").then(function (response) {
         // handle success
         // console.log('hell', response);
-        console.log('\n')
+        console.log('***********************************************')
+        console.log('\n')      
         console.log('Name of the venue:', response.data[0].venue.name);
         console.log('Location:', response.data[0].venue.city);
-        console.log('Date of the Event:', response.data[0].datetime);
+        console.log('Date of the Event:', moment(response.data[0].datetime).format('MM/DD/YYYY'));
         console.log('\n')
+        console.log('***********************************************')
     })
         .catch(function (error) {
             // handle error
@@ -59,6 +61,7 @@ function concertThis(userInput) {
 function movieThis(userInput) {
     axios.get("https://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy").then(function (response) {
         // handle success
+        console.log('***********************************************')
         console.log('\n')
         console.log('Title of the movie:', response.data.Title);
         console.log('Year the movie came out:', response.data.Year);
@@ -69,6 +72,7 @@ function movieThis(userInput) {
         console.log('Plot:', response.data.Plot);
         console.log('Actors', response.data.Actors);
         console.log('\n')
+        console.log('***********************************************')
     })
         .catch(function (error) {
             // handle error
