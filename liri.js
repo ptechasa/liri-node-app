@@ -17,7 +17,7 @@ var userCommand = process.argv[2]
 // Join them into a string to get the space delimited userInput
 var userInput = process.argv.slice(3).join(" ")
 
-//grab the fs package to handle read/write
+//grab the fs package to handle read/write/appenf files
 var filesSystem = require("fs")
 
 var spotify = new Spotify(keys.spotify);
@@ -30,13 +30,12 @@ function spotifyThisSong(userInput) {
         } else {
             // console.log(data.tracks) 
             console.log('***********************************************')
-            console.log('\n')
             console.log('Artist(s):', data.tracks.items[0].artists[0].name);
             console.log('Song Name:', data.tracks.items[0].name);
             console.log('Preview song:', data.tracks.items[0].preview_url);
             console.log('Album:', data.tracks.items[0].album.name)
-            console.log('\n')
             console.log('***********************************************')
+            console.log('\n')
         }
     });
 }
@@ -44,13 +43,12 @@ function concertThis(userInput) {
     axios.get("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp").then(function (response) {
         // handle success
         // console.log('hell', response);
-        console.log('***********************************************')
-        console.log('\n')      
+        console.log('***********************************************')    
         console.log('Name of the venue:', response.data[0].venue.name);
         console.log('Location:', response.data[0].venue.city);
         console.log('Date of the Event:', moment(response.data[0].datetime).format('MM/DD/YYYY'));
-        console.log('\n')
         console.log('***********************************************')
+        console.log('\n')
     })
         .catch(function (error) {
             // handle error
@@ -62,7 +60,6 @@ function movieThis(userInput) {
     axios.get("https://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy").then(function (response) {
         // handle success
         console.log('***********************************************')
-        console.log('\n')
         console.log('Title of the movie:', response.data.Title);
         console.log('Year the movie came out:', response.data.Year);
         console.log('IMDB Rating of the movie:', response.data.imdbRating);
@@ -71,8 +68,8 @@ function movieThis(userInput) {
         console.log('Language:', response.data.Language);
         console.log('Plot:', response.data.Plot);
         console.log('Actors', response.data.Actors);
-        console.log('\n')
         console.log('***********************************************')
+        console.log('\n')
     })
         .catch(function (error) {
             // handle error
@@ -89,6 +86,7 @@ if (userCommand === 'spotify-this-song') {
 } else if (userCommand === 'do-what-it-says') {
     filesSystem.readFile('./random.txt', 'utf8', function (err, data) {
         console.log(data)
+        
         var dataArr = data.split(",")
         console.log(dataArr)
         for (var i=0; i<dataArr.length; i+=2){
@@ -104,11 +102,10 @@ if (userCommand === 'spotify-this-song') {
                 movieThis(input);
             }
         }
-        // spotifyThisSong(dataArr[1])
     })
 }
 
-filesSystem.appendFile('log.txt', userCommand, function (err) {
+filesSystem.appendFile('log.txt', userCommand + '\n', function (err) {
     if (err) throw err;
-    console.log('Saved!');
+        console.log('--- Data is updated! ---');
   });
