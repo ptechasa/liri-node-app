@@ -103,3 +103,8 @@ if (userCommand === 'spotify-this-song') {
         // spotifyThisSong(dataArr[1])
     })
 }
+
+filesSystem.appendFile('log.txt', userCommand, function (err) {
+    if (err) throw err;
+    console.log('Saved!');
+  });
