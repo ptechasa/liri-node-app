@@ -28,11 +28,10 @@ function spotifyThisSong(userInput) {
         if (err) {
             console.log('Error', err)
         } else {
-            // console.log(data.tracks) 
-            console.log('***********************************************')
+            console.log('*************** S p o t i f y *****************')
             console.log('Artist(s):', data.tracks.items[0].artists[0].name);
             console.log('Song Name:', data.tracks.items[0].name);
-            console.log('Preview song:', data.tracks.items[0].preview_url);
+            console.log('Preview link of the song:', data.tracks.items[0].preview_url);
             console.log('Album:', data.tracks.items[0].album.name)
             console.log('***********************************************')
             console.log('\n')
@@ -41,9 +40,9 @@ function spotifyThisSong(userInput) {
 }
 function concertThis(userInput) {
     axios.get("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp").then(function (response) {
+
         // handle success
-        // console.log('hell', response);
-        console.log('***********************************************')    
+        console.log('**************** C o n c e r t ****************')
         console.log('Name of the venue:', response.data[0].venue.name);
         console.log('Location:', response.data[0].venue.city);
         console.log('Date of the Event:', moment(response.data[0].datetime).format('MM/DD/YYYY'));
@@ -58,8 +57,9 @@ function concertThis(userInput) {
 
 function movieThis(userInput) {
     axios.get("https://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy").then(function (response) {
+
         // handle success
-        console.log('***********************************************')
+        console.log('***************** M o v i e *******************')
         console.log('Title of the movie:', response.data.Title);
         console.log('Year the movie came out:', response.data.Year);
         console.log('IMDB Rating of the movie:', response.data.imdbRating);
@@ -86,17 +86,17 @@ if (userCommand === 'spotify-this-song') {
 } else if (userCommand === 'do-what-it-says') {
     filesSystem.readFile('./random.txt', 'utf8', function (err, data) {
         console.log(data)
-        
+
         var dataArr = data.split(",")
         console.log(dataArr)
-        for (var i=0; i<dataArr.length; i+=2){
+        for (var i = 0; i < dataArr.length; i += 2) {
             var cmd = dataArr[i]
-            var input = dataArr[i+1]
+            var input = dataArr[i + 1]
             console.log(cmd)
             console.log(input)
             if (cmd === 'spotify-this-song') {
                 spotifyThisSong(input)
-            }else if (cmd === 'concert-this') {
+            } else if (cmd === 'concert-this') {
                 concertThis(input);
             } else if (cmd === 'movie-this') {
                 movieThis(input);
@@ -105,7 +105,8 @@ if (userCommand === 'spotify-this-song') {
     })
 }
 
+//creating log file if it does not yet exist, and append data into a file 
 filesSystem.appendFile('log.txt', userCommand + '\n', function (err) {
     if (err) throw err;
-        console.log('--- Data is updated! ---');
-  });
+    console.log('--- Data is logged! ---');
+});
