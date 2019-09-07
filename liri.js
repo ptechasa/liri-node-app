@@ -36,6 +36,7 @@ function spotifyThisSong(userInput) {
             console.log('***********************************************')
             console.log('\n')
         }
+
     });
 }
 function concertThis(userInput) {
@@ -105,8 +106,9 @@ if (userCommand === 'spotify-this-song') {
     })
 }
 
-//creating log file if it does not yet exist, and append data into a file 
+//writing to a new file, and append data into a file 
 filesSystem.appendFile('log.txt', userCommand + '\n', function (err) {
     if (err) throw err;
     console.log('--- Data is logged! ---');
 });
+
