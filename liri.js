@@ -88,8 +88,12 @@ if (userCommand === 'spotify-this-song') {
     filesSystem.readFile('./random.txt', 'utf8', function (err, data) {
         console.log(data)
 
+        // split it by commas (to make it more readable)
         var dataArr = data.split(",")
+
+        //display the content as an array
         console.log(dataArr)
+        
         for (var i = 0; i < dataArr.length; i += 2) {
             var cmd = dataArr[i]
             var input = dataArr[i + 1]
